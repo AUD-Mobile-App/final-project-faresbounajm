@@ -1,35 +1,27 @@
 {
   "project_info": {
-    "project_number": "846104143303",
-    "firebase_url": "https://todo-list-with-location.firebaseio.com",
-    "project_id": "todo-list-with-location",
-    "storage_bucket": "todo-list-with-location.appspot.com"
+    "project_number": "395351484598",
+    "firebase_url": "https://bucketlist-145c0.firebaseio.com",
+    "project_id": "bucketlist-145c0",
+    "storage_bucket": "bucketlist-145c0.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:846104143303:android:92d28713b43f1910",
+        "mobilesdk_app_id": "1:395351484598:android:55a3df767a4e8d70",
         "android_client_info": {
-          "package_name": "com.bounajm.fares.todolist"
+          "package_name": "com.bounajm.fares.bucketlist"
         }
       },
       "oauth_client": [
         {
-          "client_id": "846104143303-gju917jo5nc0d66qlaamon1r7ia4olke.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.bounajm.fares.todolist",
-            "certificate_hash": "95e8f4ff5ce3d51069737533611d33315a0899b8"
-          }
-        },
-        {
-          "client_id": "846104143303-f2oat2o9h5ntfa72nlecb1sdufnc4el6.apps.googleusercontent.com",
+          "client_id": "395351484598-hvub1t09pq89kneo4hvimi1j5a5l6uml.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDdEhAgwUiuAV-qx5E2bUvLL8lvoq3I6AI"
+          "current_key": "AIzaSyAAqDH6OVTUHdHkSNcsNnACZe0ZjOuHayg"
         }
       ],
       "services": {
@@ -37,13 +29,8 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 2,
-          "other_platform_oauth_client": [
-            {
-              "client_id": "846104143303-f2oat2o9h5ntfa72nlecb1sdufnc4el6.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "status": 1,
+          "other_platform_oauth_client": []
         },
         "ads_service": {
           "status": 2

@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.bounajm.fares.todolist.ListAndHistoryActivity">
+    tools:context="com.bounajm.fares.bucketlist.ListAndHistoryActivity"
+    android:background="@color/backgroundColor">
 
     <FrameLayout
         android:id="@+id/content"
@@ -39,7 +40,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:background="?android:attr/windowBackground"
+        android:background="@color/barColors"
+        app:itemTextColor="@android:color/white"
+        app:itemIconTint="@android:color/white"
         app:menu="@menu/navigation" />
 
 </LinearLayout>

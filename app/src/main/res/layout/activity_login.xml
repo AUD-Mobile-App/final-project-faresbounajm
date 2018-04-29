@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.bounajm.fares.todolist.LoginActivity">
+    tools:context="com.bounajm.fares.bucketlist.LoginActivity"
+    android:background="@color/backgroundColor">
 
     <Button
         android:id="@+id/button3"
@@ -16,7 +17,7 @@
         android:layout_alignStart="@+id/button4"
         android:layout_below="@+id/button4"
         android:onClick="resetPassword"
-        android:background="@color/colorAccent"
+        android:background="@color/colorPrimary"
         android:textColor="@android:color/white"
         android:layout_marginTop="5dp"
         android:textSize="15dp"
@@ -27,14 +28,14 @@
         android:textSize="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorAccent"
+        android:background="@color/colorPrimary"
         android:textColor="@android:color/white"
         android:layout_alignEnd="@+id/et_password"
         android:layout_alignLeft="@+id/et_password"
         android:layout_alignRight="@+id/et_password"
         android:layout_alignStart="@+id/et_password"
         android:layout_below="@+id/et_password"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="20dp"
         android:onClick="login"
         android:text="Login" />
 
@@ -42,7 +43,7 @@
     <Button
         android:id="@+id/button4"
         android:textSize="20dp"
-        android:background="@color/colorAccent"
+        android:background="@color/colorPrimary"
         android:textColor="@android:color/white"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -59,13 +60,13 @@
         android:id="@+id/et_email"
         android:hint="Username"
         android:layout_marginTop="20dp"
-        android:layout_marginLeft="50dp"
-        android:layout_marginRight="50dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:inputType="textEmailAddress"
-        android:text="alofares@gmail.com"/>
+        android:text="alofares@gmail.com" />
 
     <EditText
         android:id="@+id/et_password"
@@ -74,8 +75,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/et_email"
-        android:layout_marginLeft="50dp"
-        android:layout_marginRight="50dp"
-        android:text="password12345"/>
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:text="password123"/>
 
 </RelativeLayout>

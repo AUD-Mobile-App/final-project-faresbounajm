@@ -4,67 +4,106 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.bounajm.fares.todolist.AddItemActivity">
+    tools:context="com.bounajm.fares.bucketlist.AddItemActivity"
+    android:background="@color/backgroundColor">
 
-    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:map="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/map"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        tools:context="com.bounajm.fares.todolist.AddItemActivity"
-        android:layout_above="@+id/button5"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+    <include
+        layout="@layout/toolbar_back"
+        android:id="@+id/toolbar"/>
 
-    <Button
-        android:id="@+id/button5"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="18dp"
-        android:background="@color/colorPrimary"
-        android:textColor="@android:color/white"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:onClick="newEntrySave"
-        android:text="Save" />
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar">
 
-    <EditText
-        android:id="@+id/name_et"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:hint="Name"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="10dp" />
+        <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:map="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            tools:context="com.bounajm.fares.bucketlist.AddItemActivity"
+            android:layout_above="@+id/saveOrCreate"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
 
-    <EditText
-        android:id="@+id/description_et"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:hint="Description"
-        android:gravity="top"
-        android:inputType="textMultiLine"
-        android:background="@android:color/transparent"
-        android:layout_below="@+id/name_et"
-        android:layout_marginLeft="4dp"
-        android:layout_marginRight="4dp"
-        android:layout_above="@+id/selectDateBtn" />
+        <Button
+            android:id="@+id/saveOrCreate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18dp"
+            android:background="@color/colorPrimary"
+            android:textColor="@android:color/white"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:onClick="newEntrySave"
+ />
 
-    <Button
-        android:id="@+id/selectDateBtn"
-        android:layout_width="match_parent"
-        android:background="@color/colorAccent"
-        android:textColor="@android:color/white"
-        android:textSize="20dp"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/map"
-        android:layout_centerHorizontal="true"
-        android:text="Select Date" />
+        <EditText
+            android:id="@+id/name_et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:hint="Name"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="10dp" />
+
+        <EditText
+            android:id="@+id/description_et"
+            android:layout_width="match_parent"
+            android:layout_height="99dp"
+            android:layout_above="@+id/selectDateBtn"
+            android:layout_below="@+id/name_et"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="60dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:background="@android:color/transparent"
+            android:gravity="top"
+            android:hint="Description"
+            android:inputType="textMultiLine" />
+
+        <Button
+            android:id="@+id/selectDateBtn"
+            android:layout_width="match_parent"
+            android:background="@color/colorPrimary"
+            android:textColor="@android:color/white"
+            android:textSize="20dp"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/map"
+            android:layout_centerHorizontal="true"
+            android:text="Select Date" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/selectDateBtn"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/longEt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="Longitude"
+                android:inputType="numberDecimal" />
+
+            <EditText
+                android:id="@+id/latEt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="Latitude"
+                android:inputType="numberDecimal" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
 
 </RelativeLayout>
 

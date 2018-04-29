@@ -1,4 +1,4 @@
-package com.bounajm.fares.todolist;
+package com.bounajm.fares.bucketlist;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -6,16 +6,17 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.view.MotionEventCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -24,7 +25,6 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.DateFormat;
@@ -34,8 +34,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 
-import static com.bounajm.fares.todolist.LoginActivity.myRef;
-import static com.bounajm.fares.todolist.LoginActivity.userID;
+import static com.bounajm.fares.bucketlist.LoginActivity.myRef;
+import static com.bounajm.fares.bucketlist.LoginActivity.userID;
 
 public class ListAndHistoryActivity extends AppCompatActivity {
 
@@ -55,7 +55,6 @@ public class ListAndHistoryActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
 
         getMenuInflater().inflate(R.menu.mymenu, menu);
-
         return true;
     }
 
@@ -70,7 +69,6 @@ public class ListAndHistoryActivity extends AppCompatActivity {
         return true;
     }
 
-
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -81,16 +79,17 @@ public class ListAndHistoryActivity extends AppCompatActivity {
                     current = true;
                     listViewCurrent.setVisibility(View.VISIBLE);
                     listViewHistory.setVisibility(View.INVISIBLE);
+                    setTitle("Bucket List");
                     return true;
                 case R.id.navigation_notifications:
                     current = false;
                     listViewCurrent.setVisibility(View.INVISIBLE);
                     listViewHistory.setVisibility(View.VISIBLE);
+                    setTitle("Completed");
                     return true;
             }
             return false;
         }
-
     };
 
     final ArrayList<ListItem> todoListAll = new ArrayList<>();
@@ -137,7 +136,7 @@ public class ListAndHistoryActivity extends AppCompatActivity {
         });
 
 
-        myRef.child(userID()).child("numbers").addValueEventListener(new ValueEventListener() {
+        myRef.child(userID()).child("bucketItem").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -191,9 +190,9 @@ public class ListAndHistoryActivity extends AppCompatActivity {
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
 
                 if(current){
-                    myRef.child(userID()).child("numbers").child(todoListCurrent.get(position).dbKey).removeValue();
+                    myRef.child(userID()).child("bucketItem").child(todoListCurrent.get(position).dbKey).removeValue();
                 }else{
-                    myRef.child(userID()).child("numbers").child(todoListHistory.get(position).dbKey).removeValue();
+                    myRef.child(userID()).child("bucketItem").child(todoListHistory.get(position).dbKey).removeValue();
                 }
 
                 return true;
@@ -279,13 +278,13 @@ public class ListAndHistoryActivity extends AppCompatActivity {
                     if(current){
                         if(i < todoListCurrent.size() && newState){
                             todoListCurrent.get(i).completed = true;
-                            myRef.child(userID()).child("numbers")
+                            myRef.child(userID()).child("bucketItem")
                                     .child(todoListCurrent.get(i).dbKey).setValue(todoListCurrent.get(i));
                         }
                     }else{
                         if(i < todoListHistory.size() && !newState) {
                             todoListHistory.get(i).completed = false;
-                            myRef.child(userID()).child("numbers")
+                            myRef.child(userID()).child("bucketItem")
                                     .child(todoListHistory.get(i).dbKey).setValue(todoListHistory.get(i));
                         }
                     }
@@ -314,8 +313,8 @@ public class ListAndHistoryActivity extends AppCompatActivity {
                 offlineImg.setVisibility(View.INVISIBLE);
             }
 
-            name.setText(list.get(i).name);
-            description.setText(list.get(i).description);
+            name.setText(trim(list.get(i).name, 25));
+            description.setText(trim(list.get(i).description, 25));
             date.setText(txtDate.format(list.get(i).dueDate));
 
             if(list.get(i).completed){
@@ -326,6 +325,16 @@ public class ListAndHistoryActivity extends AppCompatActivity {
 
             return view;
         }
+
+        public String trim(String s, int length){
+
+            String str = s.substring(0, Math.min(s.length(), length));
+
+            if(s.length() > length) str += "...";
+
+            return str;
+        }
+
     }
 
 }

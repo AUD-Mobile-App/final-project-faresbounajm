@@ -1,4 +1,4 @@
-package com.bounajm.fares.todolist;
+package com.bounajm.fares.bucketlist;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -86,7 +87,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public static void setOnline(){
         if(isLoggedin()){
-            Query query = myRef.child(userID()).child("numbers");
+            Query query = myRef.child(userID()).child("bucketItem");
             query.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
@@ -106,31 +107,11 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-//    @Override
-//    public void onBackPressed() {
-//        Log.d("CDA", "onBackPressed Called");
-//        Intent setIntent = new Intent(Intent.ACTION_MAIN);
-//        setIntent.addCategory(Intent.CATEGORY_HOME);
-//        setIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//        startActivity(setIntent);
-//    }
 
     private void afterLogin(){
-
         setOnline();
         startActivity(new Intent(LoginActivity.this, ListAndHistoryActivity.class));
         finish();
-
-//        mAuth.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
-//            @Override
-//            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-//                if(firebaseAuth.getCurrentUser() != null){
-//                    loggedIn = true;
-//                }else{
-//                    loggedIn = false;
-//                }
-//            }
-//        });
     }
 
     public void getDatabase() {
@@ -157,15 +138,9 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "createUserWithEmail:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
                             afterLogin();
                         } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                            Toast.makeText(LoginActivity.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, "Account already exists", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -182,35 +157,33 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             Toast.makeText(LoginActivity.this, "Success: " + user.getEmail(),
                                     Toast.LENGTH_SHORT).show();
                             afterLogin();
                         } else {
-                            // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
                             Toast.makeText(LoginActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
-                            //updateUI(null);
                         }
 
-                        // [START_EXCLUDE]
                         if (!task.isSuccessful()) {
-                            //mStatusTextView.setText(R.string.auth_failed);
                             Toast.makeText(LoginActivity.this, "Authentication failed!",
                                     Toast.LENGTH_SHORT).show();
                         }
-                        //hideProgressDialog();
-                        // [END_EXCLUDE]
                     }
                 });
-        // [END sign_in_with_email]
     }
 
     private boolean validateForm() {
         boolean valid = true;
+
+        if(!connected){
+            Toast.makeText(LoginActivity.this, "Unable to connect, please check internet.",
+                    Toast.LENGTH_SHORT).show();
+            return false;
+        }
 
         String email = emailET.getText().toString();
         if (TextUtils.isEmpty(email)) {
@@ -224,10 +197,12 @@ public class LoginActivity extends AppCompatActivity {
         if (TextUtils.isEmpty(password)) {
             passwordET.setError("Required.");
             valid = false;
-        } else {
+        }else if (password.length() < 6){
+            passwordET.setError("minimum characters: 6");
+            valid = false;
+        }else{
             passwordET.setError(null);
         }
-
         return valid;
     }
 
@@ -243,59 +218,40 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+    private boolean validateFormResetPassword() {
+        boolean valid = true;
+
+        if(!connected){
+            Toast.makeText(LoginActivity.this, "Unable to connect, please check internet.",
+                    Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        String email = emailET.getText().toString();
+        if (TextUtils.isEmpty(email)) {
+            emailET.setError("Required.");
+            valid = false;
+        } else {
+            emailET.setError(null);
+        }
+        return valid;
+    }
+
     public void resetPassword(View view){
 
-        mAuth.sendPasswordResetEmail(emailET.getText().toString());
+        if (!validateFormResetPassword()) {
+            return;
+        }
 
-    }
-
-
-    public void asd(){
-
-        //startActivity(new Intent(this, ListActivity.class));
-
-        final EditText editText = (EditText) findViewById(R.id.et_password);
-
-
-        final DatabaseReference myRef = database.getReference("message");
-
-
-        editText.addTextChangedListener(new TextWatcher() {
-
-            public void afterTextChanged(Editable s) {
-
-                myRef.setValue(s.toString());
-
+        mAuth.sendPasswordResetEmail(emailET.getText().toString()).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Toast.makeText(LoginActivity.this, "A link to reset your password has been sent to your email.",
+                        Toast.LENGTH_SHORT).show();
             }
-
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
-
         });
 
-        // Read from the database
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-                String value = dataSnapshot.getValue(String.class);
-                editText.setText(value);
-                editText.setSelection(editText.getText().length());
-
-                //Log.d(TAG, "Value is: " + value);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                //Log.w(TAG, "Failed to read value.", error.toException());
-            }
-        });
     }
-
-
 }
 
 

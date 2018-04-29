@@ -1,4 +1,4 @@
-package com.bounajm.fares.todolist;
+package com.bounajm.fares.bucketlist;
 
 import org.junit.Test;
 
