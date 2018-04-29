@@ -184,21 +184,6 @@ public class ListAndHistoryActivity extends AppCompatActivity {
         });
 
 
-        listViewCurrent.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
-
-                if(current){
-                    myRef.child(userID()).child("bucketItem").child(todoListCurrent.get(position).dbKey).removeValue();
-                }else{
-                    myRef.child(userID()).child("bucketItem").child(todoListHistory.get(position).dbKey).removeValue();
-                }
-
-                return true;
-            }
-        });
-
     }
 
     public void split(){

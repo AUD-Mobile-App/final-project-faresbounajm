@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -168,13 +169,24 @@ public class AddItemActivity extends AppCompatActivity implements OnMapReadyCall
 
     private boolean validateForm() {
 
+
+        if(!TextUtils.isEmpty(longEt.getText().toString()) && TextUtils.isEmpty(latEt.getText().toString())) {
+            longEt.setError("Leave both latitude & longitude fields empty if you don't want to save a location.");
+            return false;
+        }else if(TextUtils.isEmpty(longEt.getText().toString()) && !TextUtils.isEmpty(latEt.getText().toString())){
+            latEt.setError("Leave both latitude & longitude fields empty if you don't want to save a location.");
+            return false;
+        }
+
         String email = nameEt.getText().toString();
         if (TextUtils.isEmpty(email)) {
             nameEt.setError("Required.");
             return false;
-        } else {
-            nameEt.setError(null);
         }
+
+        nameEt.setError(null);
+        longEt.setError(null);
+        latEt.setError(null);
         return true;
     }
 
@@ -195,6 +207,9 @@ public class AddItemActivity extends AppCompatActivity implements OnMapReadyCall
             x.longitude = Double.parseDouble(longEt.getText().toString());
             x.latitude = Double.parseDouble(latEt.getText().toString());
         }else{
+            Toast.makeText(this,
+                    "No Location Saved.",
+                    Toast.LENGTH_SHORT).show();
             x.locationSet = false;
         }
 

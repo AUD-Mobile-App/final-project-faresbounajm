@@ -21,7 +21,7 @@
         android:textColor="@android:color/white"
         android:layout_marginTop="5dp"
         android:textSize="15dp"
-        android:text="Forgot Password" />
+        android:text="@string/forgot_password" />
 
     <Button
         android:id="@+id/button2"
@@ -37,7 +37,7 @@
         android:layout_below="@+id/et_password"
         android:layout_marginTop="20dp"
         android:onClick="login"
-        android:text="Login" />
+        android:text="@string/login" />
 
 
     <Button
@@ -54,11 +54,11 @@
         android:layout_below="@+id/button2"
         android:onClick="signUp"
         android:layout_marginTop="5dp"
-        android:text="Sign Up" />
+        android:text="@string/sign_up" />
 
     <EditText
         android:id="@+id/et_email"
-        android:hint="Username"
+        android:hint="@string/usernameHint"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
@@ -66,17 +66,17 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:inputType="textEmailAddress"
-        android:text="alofares@gmail.com" />
+        android:text="@string/sampleUsername" />
 
     <EditText
         android:id="@+id/et_password"
-        android:hint="password"
+        android:hint="@string/passwordHint"
         android:inputType="textPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/et_email"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:text="password123"/>
+        android:text="@string/samplePassword"/>
 
 </RelativeLayout>
